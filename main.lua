@@ -8,9 +8,17 @@ require('switch')
 require('editor')
 
 require('camera')
+require('file')
 
+maps = {
+	'map',
+	'maptwo'
+}
+currentmap = 1
 
 function love.load()
+	debug = {}
+	file.loadmap(maps[currentmap])
 end
 
 function love.update(dt)
@@ -43,22 +51,39 @@ function love.draw()
 	mx, _ = camera.revert(mx, my)
 	love.graphics.print(mx, 150, 100)
 	love.graphics.setColor(0,0,0)
-	--util.drawTable(files)
+	util.drawTable(debug)
 end
 
 function love.keypressed( key )
 	if key == "`" then
-    	bEditing = not bEditing
-   	end
-   	if bEditing then
-			editor.keypressed(key)
-   	else
-	    if key == "space" or key == 'w' then
-	    	if player.bCanjump then
-	    	  	player.v.y = -jumpV
-	      	end
-	    end
-   end
+  	bEditing = not bEditing
+ 	end
+ 	if bEditing then
+		editor.keypressed(key)
+		if key == 'i' then
+			file.loadmap(maps[currentmap])
+		end
+		if key == 'o' then
+			file.savemap(maps[currentmap])
+		end
+		if key == 'u' then
+			currentmap = (currentmap) % #maps + 1
+			file.loadmap(maps[currentmap])
+
+		end
+		if key == "y" then
+			debug = {}
+			for i = 1, #switch do
+				table.insert(debug, switch[i].x)
+			end
+		end
+ 	else
+    if key == "space" or key == 'w' then
+    	if player.bCanjump then
+    	  	player.v.y = -jumpV
+      	end
+    end
+ end
 end
 
 
