@@ -19,6 +19,7 @@ function love.update(dt)
 	else
 		player.update(dt)
 	end
+	files = love.filesystem.getDirectoryItems("")
 end
 
 function love.draw()
@@ -42,6 +43,7 @@ function love.draw()
 	mx, _ = camera.revert(mx, my)
 	love.graphics.print(mx, 150, 100)
 	love.graphics.setColor(0,0,0)
+	util.drawTable(files)
 end
 
 function love.keypressed( key )

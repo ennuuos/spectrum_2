@@ -21,7 +21,7 @@ editor = {
         cx = cx + 25
       end
     end
-    love.graphics.circle("fill", cx, cy, 12, 5)
+    love.graphics.line(cx, cy, mx - mx % 50 + 25, my - my % 50 + 25)
   end,
   keypressed = function(key)
     if key == "p" then

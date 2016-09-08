@@ -33,4 +33,11 @@ util = {
 			return ax, ay, 0
 		end
 	end,
+	drawTable = function(table)
+		y = 0
+		for i, v in ipairs(table) do
+			love.graphics.print(i..", "..v, 20, y)
+			y = y + 14
+		end
+	end,
 }
