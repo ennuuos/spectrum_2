@@ -7,12 +7,14 @@ require('switch')
 
 require('editor')
 
+require('camera')
 
 
 function love.load()
 end
 
 function love.update(dt)
+	camera.update(dt)
 	if bEditing then
 	else
 		player.update(dt)
@@ -20,9 +22,9 @@ function love.update(dt)
 end
 
 function love.draw()
-	love.graphics.push()
-	love.graphics.translate(-player.x + screen.width/2, -player.y + screen.height/2)
 
+	camera.focus(player.x, player.y)
+	camera.push()
 	if bEditing then
 		love.graphics.clear(200, 200, 200)
 	else
@@ -34,7 +36,12 @@ function love.draw()
 	if bEditing then
 		editor.draw()
 	end
-	love.graphics.pop()
+	camera.pop()
+	mx, my = love.mouse.getPosition()
+	love.graphics.print(mx, 100, 100)
+	mx, _ = camera.revert(mx, my)
+	love.graphics.print(mx, 150, 100)
+	love.graphics.setColor(0,0,0)
 end
 
 function love.keypressed( key )
@@ -46,7 +53,7 @@ function love.keypressed( key )
    	else
 	    if key == "space" or key == 'w' then
 	    	if player.bCanjump then
-	    	  	player.v.y = -123
+	    	  	player.v.y = -jumpV
 	      	end
 	    end
    end
@@ -55,7 +62,7 @@ end
 
 
 function love.mousepressed(x, y, button)
-	mx, my = love.mouse.getPosition()
+
 
 	if bEditing then
 		editor.mousepressed(x, y, button)

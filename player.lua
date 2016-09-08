@@ -18,10 +18,10 @@ player = {
 		player.collide_switches()
 		player.v.x = 0
 		if love.keyboard.isDown('d') then
-			player.v.x = player.v.x + 70
+			player.v.x = player.v.x + speed
 		end
 		if love.keyboard.isDown('a') then
-			player.v.x = player.v.x - 70
+			player.v.x = player.v.x - speed
 		end
 
 	end,

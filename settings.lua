@@ -17,7 +17,8 @@ colors = {
 }
 
 gravity = 9.8 * 50
-jumpV = 9.8 * 50 * 1.5
+jumpV = 980/4
+speed = 100
 
 bEditing = true
 editColor = 'blue'

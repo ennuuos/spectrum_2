@@ -1,8 +1,7 @@
 editor = {
   draw = function()
     mx, my = love.mouse.getPosition()
-    mx = mx - screen.width/2 + player.x
-    my = my - screen.height/2 + player.y
+    mx, my = camera.revert(mx, my)
     love.graphics.setColor(colors[editColor].r, colors[editColor].g, colors[editColor].b)
     love.graphics.rectangle("fill", mx - mx % 50 + 19, my - my % 50 + 19, 12, 12)
     cx = mx - mx % 50
@@ -41,8 +40,7 @@ editor = {
     end
   end,
   mousepressed = function(x, y, button)
-    x = x - screen.width/2 + player.x
-    y = y - screen.height/2 + player.y
+    x, y = camera.revert(x, y)
     if button == 1 then
 			index = #tile + 1
 			for i = 1, #tile do
