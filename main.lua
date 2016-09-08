@@ -47,6 +47,11 @@ function love.draw()
 end
 
 function love.keypressed( key )
+	if love.filesystem.exists("potato.potato") then
+		success, errormsg = love.filesystem.append("potato.potato", ', '..key)
+	else
+		love.filesystem.write("potato.potato", key)
+	end
 	if key == "`" then
     	bEditing = not bEditing
    	end

@@ -49,13 +49,19 @@ editor = {
 					break
 				end
 			end
-			tile[index] = {
-				x = x - x % 50,
-				y = y - y % 50,
-				width = 50,
-				height = 50,
-				color = editColor,
-			}
+      if love.keyboard.isDown('lshift') then
+        if tile[index] then
+          table.remove(tile, index)
+        end
+      else
+  			tile[index] = {
+  				x = x - x % 50,
+  				y = y - y % 50,
+  				width = 50,
+  				height = 50,
+  				color = editColor,
+  			}
+      end
 		else
 			cx = x - x % 50
 			cy = y - y % 50
@@ -74,13 +80,28 @@ editor = {
 					cx = cx + 25
 				end
 			end
-			table.insert(switch, {
-				x = cx - 7,
-				y = cy - 7,
-				width = 20,
-				height = 20,
-				color = editColor,
-			})
+      cx = cx - 8
+      cy = cy - 8
+      index = #switch + 1
+      for i = 1, #switch do
+        if switch[i].x == cx and switch[i].y == cy then
+          index = i
+          break
+        end
+      end
+      if love.keyboard.isDown('lshift') then
+        if switch[index] then
+          table.remove(switch, index)
+        end
+      else
+  			switch[index] = {
+  				x = cx,
+  				y = cy,
+  				width = 20,
+  				height = 20,
+  				color = editColor,
+  			}
+      end
     end
   end,
 }
