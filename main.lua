@@ -19,7 +19,7 @@ function love.update(dt)
 	else
 		player.update(dt)
 	end
-	files = love.filesystem.getDirectoryItems("")
+	--files = love.filesystem.getDirectoryItems("")
 end
 
 function love.draw()
@@ -43,15 +43,10 @@ function love.draw()
 	mx, _ = camera.revert(mx, my)
 	love.graphics.print(mx, 150, 100)
 	love.graphics.setColor(0,0,0)
-	util.drawTable(files)
+	--util.drawTable(files)
 end
 
 function love.keypressed( key )
-	if love.filesystem.exists("potato.potato") then
-		success, errormsg = love.filesystem.append("potato.potato", ', '..key)
-	else
-		love.filesystem.write("potato.potato", key)
-	end
 	if key == "`" then
     	bEditing = not bEditing
    	end
