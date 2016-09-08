@@ -16,6 +16,12 @@ colors = {
 	},
 }
 
+grid = {
+	width = 50,
+	height = 50,
+	size = 50,
+}
+
 gravity = 9.8 * 50
 jumpV = 980/4
 speed = 100

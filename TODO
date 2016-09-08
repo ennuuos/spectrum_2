@@ -13,4 +13,5 @@ TODO: Change jump height to ~2.1-2.2 blocks high (for puzzle purposes) #tweak
 TODO: Can sometimes jump off walls #bug
 TODO: Bitmask tiles. #aesthetic #polish
 TODO: Maybe come up with better aesthetics #aesthetic
-TODO: Make a better way to check the side the cursor is on. [A=x>y, B=x+y>1. x=(A+B)/2*width y=(~A+~B)/2*height] #codegolf
+TODO: Proliferate grid.size variable #tweak
+TODO: Change switch variables to size instead of width and height #tweak

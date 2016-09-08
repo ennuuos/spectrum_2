@@ -1,4 +1,5 @@
 editor = {
+  --[[
   draw = function()
     mx, my = love.mouse.getPosition()
     mx, my = camera.revert(mx, my)
@@ -22,6 +23,22 @@ editor = {
       end
     end
     love.graphics.line(cx, cy, mx - mx % 50 + 25, my - my % 50 + 25)
+  end,]]
+  draw = function()
+    mx, my = love.mouse.getPosition()
+    mx, my = camera.revert(mx, my)
+    cx = mx - mx % 50
+    cy = my - my % 50
+    love.graphics.setColor(colors[editColor].r, colors[editColor].g, colors[editColor].b)
+    love.graphics.rectangle("fill", cx + 19, cy + 19, 12, 12)
+
+    check_a = util.boolToInt(mx % grid.size > my % grid.size)
+    check_b = util.boolToInt(mx % grid.size + my % grid.size > grid.size)
+
+    ox = cx + (check_a + check_b) * grid.size / 2
+    oy = cy + (math.abs((check_a + check_b) % 2 - 1) + math.abs(check_a - 1) * check_b * 2) * grid.size / 2
+    love.graphics.line(ox, oy, mx - mx % 50 + 25, my - my % 50 + 25)
+
   end,
   keypressed = function(key)
     if key == "p" then
