@@ -1,0 +1,16 @@
+TODO: Change the map select system to autodetect maps #map
+TODO: Change the map loader to search in ../maps/ #tweak
+TODO: Have a create new map option #ui #ux
+TODO: Create a GUI for map loading saving and changing #ux #feature #ui
+TODO: Make a player spawn point object that can reset player position and color (and is activated on map load) #ux #feature
+TODO: Put the spawn point object in the map loader #map
+TODO: Create a map timer and score feature #feature
+TODO: Reset the camera to correct position on load #polish #tweak
+TODO: Fix Player offset (add -player.width/2 and -player.height/2 to the camera.target thing) #bug #polish
+TODO: Implement Chromatic Abberation on colour change #aesthetic #feature
+TODO: Implement doors and keys (magenta, cyan and yellow) #feature
+TODO: Change jump height to ~2.1-2.2 blocks high (for puzzle purposes) #tweak
+TODO: Can sometimes jump off walls #bug
+TODO: Bitmask tiles. #aesthetic #polish
+TODO: Maybe come up with better aesthetics #aesthetic
+TODO: Make a better way to check the side the cursor is on. [A=x>y, B=x+y>1. x=(A+B)/2*width y=(~A+~B)/2*height] #codegolf
