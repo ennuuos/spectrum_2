@@ -17,18 +17,32 @@ currentmap = 1
 
 function love.load()
 	debug = {}
-	if maps[currentmap] then
-		file.loadmap(maps[currentmap])
-	end
 	canvas = love.graphics.newCanvas(screen.width, screen.height)
 	sm_g = 10
 	sm_o = time
-	camera.instantfocus(player.x + player.width/2, player.y + player.height/2)
 	file.findmaps()
+	if maps[currentmap] then
+		file.loadmap(maps[currentmap])
+	end
+	camera.instantfocus(player.x + player.width/2, player.y + player.height/2)
+	local img = love.graphics.newImage('particle.png')
+	psystem = love.graphics.newParticleSystem(img, 32)
+	psystem:setParticleLifetime(2, 5) -- Particles live at least 2s and at most 5s.
+	psystem:setEmissionRate(100)
+	psystem:setSizeVariation(1)
+	psystem:setLinearAcceleration(-10, -10, 10, 10) -- Random movement in all directions.
+	psystem:setColors(colors[cycle[player.color]].r, colors[cycle[player.color]].g, colors[cycle[player.color]].b, 255, 200, 200, 200, 0) -- Fade to transparency.
+	psystem:setSpin(0, 5)
+	psystem:setTangentialAcceleration(600, 1000)
+	psystem:setRadialAcceleration(100, 100)
+	psystem:setBufferSize(500)
+	psystem:setSizes(1, 0)
+
 end
 time = 0
 switchmag = 0
 function love.update(dt)
+	psystem:update(dt)
 	time = time + dt
 	camera.update(dt)
 	camera.focus(player.x + player.width/2, player.y + player.height/2)
@@ -63,6 +77,10 @@ function love.draw()
 	else
 		love.graphics.clear(colors[player.color].r, colors[player.color].g, colors[player.color].b)
 	end
+
+	love.graphics.setColor(255, 255, 255)
+	love.graphics.draw(psystem, player.x + player.width/2, player.y + player.height/2)
+
 	tile.drawAll()
 	player.drawSpawn()
 	switch.drawAll()
@@ -79,7 +97,7 @@ function love.draw()
 	love.graphics.draw(canvas)
 
 
-	mx, my = love.mouse.getPosition()
+	x, y = love.mouse.getPosition()
 	love.graphics.setColor(0,0,0)
 	util.drawTable(debug)
 	file.drawmaps()
@@ -92,11 +110,16 @@ function love.draw()
 	love.graphics.rectangle("fill", screen.width - 5 - 30, 5, 30, 30)
 	love.graphics.setColor(colors[c].r, colors[c].g, colors[c].b)
 	love.graphics.rectangle("fill", screen.width - 5 - 30 + 5, 5 + 5, 30 - 10, 30 - 10)
+
+
 end
 
 function love.keypressed( key )
 	if key == "`" then
   	bEditing = not bEditing
+		if bEditing then
+			psystem:pause( )
+		end
  	end
  	if bEditing then
 		editor.keypressed(key)
@@ -125,6 +148,9 @@ function love.keypressed( key )
 			sm_g = 10
 			sm_o = time
 			player.reset()
+		end
+		if key == "n" then
+			file.newmap("test")
 		end
 end
 

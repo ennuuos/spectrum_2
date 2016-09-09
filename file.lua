@@ -63,6 +63,11 @@ file = {
     love.filesystem.write(map, f)
   end,
   findmaps = function()
+    if not love.filesystem.exists("default.map") and not love.filesystem.exists("/maps/default.map") then
+      f = "0,0,0,red"
+      love.filesystem.createDirectory("maps")
+      love.filesystem.write("default.map", f)
+    end
     local dir = "/maps/"
     --assuming that our path is full of lovely files (it should at least contain main.lua in this case)
     local files = love.filesystem.getDirectoryItems(dir)
@@ -80,6 +85,7 @@ file = {
         table.insert(maps, string.sub(file, 1, string.find(file, '.map')-1))
       end
     end
+
   end,
   drawmaps = function()
     for i = 1, #maps do
@@ -101,6 +107,18 @@ file = {
 
       love.graphics.setColor(0,0,0)
       love.graphics.print(maps[i], 26, (i - 1) * 30 + 30 + 5)
+    end
+  end,
+  newmap = function(name)
+    if not love.filesystem.exists(name..'.map') then
+      f = "0,0,0,red"
+      love.filesystem.write(name..'.map', f)
+      table.insert(maps, name)
+      currentmap = #maps
+      file.loadmap(maps[currentmap])
+      camera.instantfocus(player.x + player.width/2, player.y + player.height/2)
+      sm_g = 10
+      sm_o = time
     end
   end,
 }

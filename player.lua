@@ -79,6 +79,8 @@ player = {
 				if util.intersect(player.x, player.y, player.width, player.height, switch[i].x, switch[i].y, switch[i].width, switch[i].height) then
 					player.color = switch[i].color
 					sm_o = time
+					psystem:setColors(colors[cycle[player.color]].r, colors[cycle[player.color]].g, colors[cycle[player.color]].b, 255, 200, 200, 200, 0) -- Fade to transparency.
+
 				end
 			end
 		end
