@@ -14,6 +14,16 @@ colors = {
 		g = 50,
 		b = 200,
 	},
+	['grey'] = {
+		r = 200,
+		g = 200,
+		b = 200,
+	},
+	['magenta'] = {
+		r = 200,
+		g = 50,
+		b = 200,
+	},
 }
 
 grid = {
@@ -23,8 +33,8 @@ grid = {
 }
 
 gravity = 9.8 * 50
-jumpV = 980/4
-speed = 100
+jumpV = 980/3
+speed = 200
 
 bEditing = true
 editColor = 'blue'
@@ -32,7 +42,9 @@ editColor = 'blue'
 cycle = {
 	['red'] = 'green',
 	['green'] = 'blue',
-	['blue'] = 'red',
+	['blue'] = 'grey',
+	['grey'] = 'magenta',
+	['magenta'] = 'red',
 }
 
 screen = {

@@ -6,6 +6,7 @@ util = {
 			return 0
 		end
 	end,
+
 	intersect = function(ax, ay, aw, ah, bx, by, bw, bh)
 		return ax + aw > bx and ax < bx + bw and ay + ah > by and ay < by + bh
 	end,

@@ -18,6 +18,12 @@ camera = {
     camera.fx = x - screen.width/2
     camera.fy = y - screen.height/2
   end,
+  instantfocus = function(x, y)
+    camera.x = x - screen.width/2
+    camera.y = y - screen.height/2
+    camera.fx = x - screen.width/2
+    camera.fy = y - screen.height/2
+  end,
   update = function(dt)
     camera.x = camera.x + ((camera.fx - camera.x)*camera.smoothing) * dt
     camera.y = camera.y + ((camera.fy - camera.y)*camera.smoothing) * dt

@@ -9,6 +9,7 @@ require('editor')
 
 require('camera')
 require('file')
+require('shader')
 
 maps = {
 	'map',
@@ -19,20 +20,42 @@ currentmap = 1
 function love.load()
 	debug = {}
 	file.loadmap(maps[currentmap])
+	canvas = love.graphics.newCanvas(screen.width, screen.height)
+	sm_g = 10
+	sm_o = time
+	camera.instantfocus(player.x + player.width/2, player.y + player.height/2)
 end
-
+time = 0
+switchmag = 0
 function love.update(dt)
+	time = time + dt
 	camera.update(dt)
+	camera.focus(player.x + player.width/2, player.y + player.height/2)
+	updateswitchmag(dt)
 	if bEditing then
 	else
 		player.update(dt)
 	end
-	--files = love.filesystem.getDirectoryItems("")
+end
+
+sm_o = 0
+sm_l = 0.15
+sm_m = 0.005
+sm_g = 1
+function updateswitchmag(dt)
+		table.remove(debug)
+		table.insert(debug, switchmag)
+	if time - sm_o < sm_l * 3.14 then
+		switchmag = math.cos((time-sm_o)/(sm_l*2)) * sm_m * sm_g
+	else
+		switchmag = 0
+		sm_g = 1
+	end
 end
 
 function love.draw()
-
-	camera.focus(player.x, player.y)
+	love.graphics.setShader()
+	love.graphics.setCanvas(canvas)
 	camera.push()
 	if bEditing then
 		love.graphics.clear(200, 200, 200)
@@ -40,16 +63,22 @@ function love.draw()
 		love.graphics.clear(colors[player.color].r, colors[player.color].g, colors[player.color].b)
 	end
 	tile.drawAll()
+	player.drawSpawn()
 	switch.drawAll()
 	player.draw()
 	if bEditing then
 		editor.draw()
 	end
 	camera.pop()
+	shader.abberation:send('magnitude', switchmag)
+	shader.abberation:send('evolution', time * 10)
+	love.graphics.setShader(shader.abberation)
+	love.graphics.setCanvas()
+	love.graphics.setColor(255, 255, 255)
+	love.graphics.draw(canvas)
+
+
 	mx, my = love.mouse.getPosition()
-	love.graphics.print(mx, 100, 100)
-	mx, _ = camera.revert(mx, my)
-	love.graphics.print(mx, 150, 100)
 	love.graphics.setColor(0,0,0)
 	util.drawTable(debug)
 end
@@ -62,6 +91,7 @@ function love.keypressed( key )
 		editor.keypressed(key)
 		if key == 'i' then
 			file.loadmap(maps[currentmap])
+
 		end
 		if key == 'o' then
 			file.savemap(maps[currentmap])
@@ -69,13 +99,9 @@ function love.keypressed( key )
 		if key == 'u' then
 			currentmap = (currentmap) % #maps + 1
 			file.loadmap(maps[currentmap])
-
-		end
-		if key == "y" then
-			debug = {}
-			for i = 1, #switch do
-				table.insert(debug, switch[i].x)
-			end
+			camera.instantfocus(player.x + player.width/2, player.y + player.height/2)
+			sm_g = 10
+			sm_o = time
 		end
  	else
     if key == "space" or key == 'w' then
@@ -84,6 +110,11 @@ function love.keypressed( key )
       	end
     end
  end
+		if key == 'r' then
+			sm_g = 10
+			sm_o = time
+			player.reset()
+		end
 end
 
 

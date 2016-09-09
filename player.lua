@@ -8,7 +8,16 @@ player = {
 		y = 0,
 	},
 	color = 'red',
-
+	s = {
+		x = 0,
+		y = 0,
+		c = "red"
+	},
+	reset = function()
+		player.x = player.s.x
+		player.y = player.s.y
+		player.color = player.s.c
+	end,
 	update = function(dt)
 		player.v.y = player.v.y + gravity * dt
 		player.x = player.x + player.v.x * dt
@@ -31,6 +40,13 @@ player = {
 		love.graphics.rectangle("fill", player.x, player.y, player.width, player.height)
 		love.graphics.setColor(200, 200, 200)
 		love.graphics.rectangle("fill", player.x + 5, player.y + 5, player.width-10, player.height-10)
+	end,
+
+	drawSpawn = function()
+		love.graphics.setColor(colors[player.s.c].r -20, colors[player.s.c].g -20, colors[player.s.c].b -20)
+	    love.graphics.circle("fill", player.s.x + 14/2, player.s.y + 14/2, 14, 3)
+		love.graphics.setColor(colors[player.s.c].r, colors[player.s.c].g, colors[player.s.c].b)
+	    love.graphics.circle("fill", player.s.x + 14/2, player.s.y + 14/2, 11, 3)
 	end,
 
 	cycleColor = function(reverse)
@@ -60,6 +76,7 @@ player = {
 			if switch[i].color ~= player.color then
 				if util.intersect(player.x, player.y, player.width, player.height, switch[i].x, switch[i].y, switch[i].width, switch[i].height) then
 					player.color = switch[i].color
+					sm_o = time
 				end
 			end
 		end

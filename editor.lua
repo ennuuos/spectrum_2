@@ -1,4 +1,7 @@
 editor = {
+
+
+
   --[[
   draw = function()
     mx, my = love.mouse.getPosition()
@@ -16,6 +19,7 @@ editor = {
         cy = cy + 25
       end
     else
+
       if my % 50 > mx % 50 then
         cy = cy + 25
       else
@@ -24,22 +28,24 @@ editor = {
     end
     love.graphics.line(cx, cy, mx - mx % 50 + 25, my - my % 50 + 25)
   end,]]
+
   draw = function()
     mx, my = love.mouse.getPosition()
     mx, my = camera.revert(mx, my)
-    cx = mx - mx % 50
-    cy = my - my % 50
-    love.graphics.setColor(colors[editColor].r, colors[editColor].g, colors[editColor].b)
-    love.graphics.rectangle("fill", cx + 19, cy + 19, 12, 12)
+    love.graphics.setColor(colors[editColor].r - 10, colors[editColor].g - 10, colors[editColor].b - 10)
+    love.graphics.rectangle("fill", mx - mx % 50 + 19, my - my % 50 + 19, 12, 12)
 
-    check_a = util.boolToInt(mx % grid.size > my % grid.size)
-    check_b = util.boolToInt(mx % grid.size + my % grid.size > grid.size)
+    a = util.boolToInt(mx % grid.size > my % grid.size)
+    b = util.boolToInt(mx % grid.size + my % grid.size > grid.size)
 
-    ox = cx + (check_a + check_b) * grid.size / 2
-    oy = cy + (math.abs((check_a + check_b) % 2 - 1) + math.abs(check_a - 1) * check_b * 2) * grid.size / 2
+    ox = mx - mx % 50 + (a + b) * grid.size / 2
+    oy = my - my % 50 + (b + math.abs(a - 1)) * grid.size / 2
+
     love.graphics.line(ox, oy, mx - mx % 50 + 25, my - my % 50 + 25)
-
   end,
+
+
+
   keypressed = function(key)
     if key == "p" then
       mx, my = love.mouse.getPosition()
@@ -52,8 +58,12 @@ editor = {
       editColor = cycle[editColor]
     end
     if key == 'q' then
-      editColor = cycle[editColor]
-      editColor = cycle[editColor]
+      for i, v in pairs(cycle) do
+        if v == editColor then
+          editColor = i
+          break
+        end
+      end
     end
   end,
   mousepressed = function(x, y, button)
