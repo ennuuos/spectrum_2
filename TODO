@@ -18,3 +18,4 @@ TODO: Change switch variables to size instead of width and height #tweak
 TODO: move everything into a game scope and create a menu scope and menu #feature #polish
 TODO: go through code and find abstractable or messy code. #tweak #codegolf
 TODO: figure out a better aesthetic for the editor cursor #aesthetic #tweak #polish
+TODO: make the save map thing more efficient (so it only opens the file once)
