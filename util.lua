@@ -11,6 +11,10 @@ util = {
 		return ax + aw > bx and ax < bx + bw and ay + ah > by and ay < by + bh
 	end,
 
+	within = function(ax, ay, bx, by, bw, bh)
+		return ax > bx and ax < bx + bw and ay > by and ay < by + bh
+	end,
+
 	smallest_intersect = function(ax, ay, aw, ah, bx, by, bw, bh)
 		intersects = {
 			ax + aw - bx,

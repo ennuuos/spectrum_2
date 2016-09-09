@@ -1,9 +1,5 @@
-TODO: Change the map select system to autodetect maps #map
-TODO: Change the map loader to search in ../maps/ #tweak
 TODO: Have a create new map option #ui #ux
-TODO: Create a GUI for map loading saving and changing #ux #feature #ui
 TODO: Create a map timer and score feature #feature
-TODO: Reset the camera to correct position on load #polish #tweak
 TODO: Implement doors and keys (magenta, cyan and yellow) #feature
 TODO: Can sometimes jump off walls #bug
 TODO: Bitmask tiles. #aesthetic #polish

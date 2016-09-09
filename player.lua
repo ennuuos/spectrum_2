@@ -17,6 +17,8 @@ player = {
 		player.x = player.s.x
 		player.y = player.s.y
 		player.color = player.s.c
+		player.v.x = 0
+		player.v.y = 0
 	end,
 	update = function(dt)
 		player.v.y = player.v.y + gravity * dt

@@ -12,18 +12,19 @@ require('file')
 require('shader')
 
 maps = {
-	'map',
-	'maptwo'
 }
 currentmap = 1
 
 function love.load()
 	debug = {}
-	file.loadmap(maps[currentmap])
+	if maps[currentmap] then
+		file.loadmap(maps[currentmap])
+	end
 	canvas = love.graphics.newCanvas(screen.width, screen.height)
 	sm_g = 10
 	sm_o = time
 	camera.instantfocus(player.x + player.width/2, player.y + player.height/2)
+	file.findmaps()
 end
 time = 0
 switchmag = 0
@@ -81,6 +82,16 @@ function love.draw()
 	mx, my = love.mouse.getPosition()
 	love.graphics.setColor(0,0,0)
 	util.drawTable(debug)
+	file.drawmaps()
+	if util.within(x, y, screen.width - 5 - 30, 5, 30, 30) then
+		c = 'green'
+	else
+		c = 'blue'
+	end
+	love.graphics.setColor(colors[c].r-20, colors[c].g-20, colors[c].b-20)
+	love.graphics.rectangle("fill", screen.width - 5 - 30, 5, 30, 30)
+	love.graphics.setColor(colors[c].r, colors[c].g, colors[c].b)
+	love.graphics.rectangle("fill", screen.width - 5 - 30 + 5, 5 + 5, 30 - 10, 30 - 10)
 end
 
 function love.keypressed( key )
@@ -120,9 +131,26 @@ end
 
 
 function love.mousepressed(x, y, button)
+	overUI = false
+	x, y = love.mouse.getPosition()
+	for i = 1, #maps do
+		if util.within(x, y, 20, (i - 1) * 30 + 30, 90, 25) then
+			overUI = true
+			currentmap = i
+			file.loadmap(maps[currentmap])
+			camera.instantfocus(player.x + player.width/2, player.y + player.height/2)
+			sm_g = 10
+			sm_o = time
+			break
+		end
+	end
 
+	if util.within(x, y, screen.width - 5 - 30, 5, 30, 30) then
+		file.savemap(maps[currentmap])
+		overUI = true
+	end
 
-	if bEditing then
+	if bEditing and not overUI then
 		editor.mousepressed(x, y, button)
 	end
 end

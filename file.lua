@@ -7,7 +7,8 @@ file = {
     while #switch > 0 do
       table.remove(switch)
     end
-
+    player.v.x = 0
+    player.v.y = 0
     if love.filesystem.exists(f) then
       for line in love.filesystem.lines(f) do
         if string.sub(line, 1, 1) == '0' then
@@ -20,6 +21,7 @@ file = {
           player.s.x = player.x
           player.s.y = player.y
           player.s.c = player.color
+
         end
         if string.sub(line, 1, 1) == '1' then
           x1 = string.find(line, ',') + 1
@@ -59,5 +61,46 @@ file = {
       f = f..'\n2,'..v.x..','..v.y..','..v.color
     end
     love.filesystem.write(map, f)
+  end,
+  findmaps = function()
+    local dir = "/maps/"
+    --assuming that our path is full of lovely files (it should at least contain main.lua in this case)
+    local files = love.filesystem.getDirectoryItems(dir)
+    for k, file in ipairs(files) do
+      --table.insert(maps, string.sub(file, 1, string.find(file, '.')))
+      if string.find(file, '.map') then
+        table.insert(maps, string.sub(file, 1, string.find(file, '.map')-1))
+      end
+    end
+    dir = ""
+    local files = love.filesystem.getDirectoryItems(dir)
+    for k, file in ipairs(files) do
+      --table.insert(maps, string.sub(file, 1, string.find(file, '.')))
+      if string.find(file, '.map') then
+        table.insert(maps, string.sub(file, 1, string.find(file, '.map')-1))
+      end
+    end
+  end,
+  drawmaps = function()
+    for i = 1, #maps do
+      if i == currentmap then
+        c = "green"
+      else
+        x, y = love.mouse.getPosition()
+        if util.within(x, y, 20, (i - 1) * 30 + 30, 90, 25) then
+          c = "blue"
+        else
+          c = "red"
+        end
+      end
+      love.graphics.setColor(colors[c].r - 20, colors[c].g - 20, colors[c].b - 20)
+      love.graphics.rectangle("fill", 20, (i - 1) * 30 + 30, 90, 25)
+
+      love.graphics.setColor(colors[c].r, colors[c].g, colors[c].b)
+      love.graphics.rectangle("fill", 20 + 5, (i - 1) * 30 + 30 + 5, 80, 15)
+
+      love.graphics.setColor(0,0,0)
+      love.graphics.print(maps[i], 26, (i - 1) * 30 + 30 + 5)
+    end
   end,
 }
