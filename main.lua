@@ -21,6 +21,11 @@ function love.load()
 	sm_g = 10
 	sm_o = time
 	file.findmaps()
+	for i, map in pairs(maps) do
+		if map == 'default' then
+			currentmap = i
+		end
+	end
 	if maps[currentmap] then
 		file.loadmap(maps[currentmap])
 	end
