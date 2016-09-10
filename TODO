@@ -1,7 +1,6 @@
 TODO: Have a create new map option #ui #ux
 TODO: Create a map timer and score feature #feature
 TODO: Implement doors and keys (magenta, cyan and yellow) #feature
-TODO: Can sometimes jump off walls #bug
 TODO: Bitmask tiles. #aesthetic #polish
 TODO: Proliferate grid.size variable #tweak
 TODO: Change switch variables to size instead of width and height #tweak

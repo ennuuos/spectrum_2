@@ -12,6 +12,7 @@ require('file')
 require('shader')
 
 maps = {
+	'default'
 }
 currentmap = 1
 
@@ -143,11 +144,7 @@ function love.keypressed( key )
 			sm_o = time
 		end
  	else
-    if key == "space" or key == 'w' then
-    	if player.bCanjump then
-    	  	player.v.y = -jumpV
-      	end
-    end
+
  end
 		if key == 'r' then
 			sm_g = 10

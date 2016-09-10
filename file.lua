@@ -86,6 +86,12 @@ file = {
       end
     end
 
+    for i, k in pairs(maps) do
+      if i ~= 1 and k == 'default' then
+        table.remove(maps, i)
+      end
+    end
+
   end,
   drawmaps = function()
     for i = 1, #maps do
@@ -105,8 +111,12 @@ file = {
       love.graphics.setColor(colors[c].r, colors[c].g, colors[c].b)
       love.graphics.rectangle("fill", 20 + 5, (i - 1) * 30 + 30 + 5, 80, 15)
 
+
+      str = maps[i]
+      str = str:gsub("(%l)(%w*)", function(a,b) return string.upper(a)..b end)
+
       love.graphics.setColor(0,0,0)
-      love.graphics.print(maps[i], 26, (i - 1) * 30 + 30 + 5)
+      love.graphics.print(str, 26, (i - 1) * 30 + 30 + 5)
     end
   end,
   newmap = function(name)

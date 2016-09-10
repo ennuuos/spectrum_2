@@ -34,6 +34,11 @@ player = {
 		if love.keyboard.isDown('a') then
 			player.v.x = player.v.x - speed
 		end
+		if love.keyboard.isDown("space") or love.keyboard.isDown('w') then
+			if player.bCanjump then
+					player.v.y = -jumpV
+				end
+		end
 
 	end,
 
@@ -61,14 +66,23 @@ player = {
 
 	end,
 	collide_tiles = function()
+		--TODO: Fix this stuff. The jumping is acting weird
+		colliders = {}
 		for i = 1, #tile do
 			if tile[i].color ~= player.color then
 				player.x, player.y, dir = util.collide(player.x, player.y, player.width, player.height, tile[i].x, tile[i].y, tile[i].width, tile[i].height)
-				if dir == 3 or dir == 4 then
+				table.insert(colliders, {i, dir})
+			end
+		end
+		for _, col in pairs(colliders) do
+			i = col[1]
+			dir = col[2]
+			if dir == 3 or dir == 4 then
+				if tile[i].x + grid.buffer < player.x + player.width and tile[i].x + tile[i].width - grid.buffer > player.x then
+					if dir == 3 then
+						player.bCanjump = true
+					end
 					player.v.y = 0
-				end
-				if dir == 3 then
-					player.bCanjump = true
 				end
 			end
 		end

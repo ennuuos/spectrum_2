@@ -30,6 +30,7 @@ grid = {
 	width = 50,
 	height = 50,
 	size = 50,
+	buffer = 5,
 }
 
 gravity = 9.8 * 50
