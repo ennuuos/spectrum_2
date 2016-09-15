@@ -10,12 +10,11 @@ require('editor')
 require('camera')
 require('file')
 require('shader')
-
+bitmask = 15
 maps = {
 	'default'
 }
 currentmap = 1
-
 function love.load()
 	debug = {}
 	canvas = love.graphics.newCanvas(screen.width, screen.height)
@@ -43,6 +42,18 @@ function love.load()
 	psystem:setRadialAcceleration(100, 100)
 	psystem:setBufferSize(500)
 	psystem:setSizes(1, 0)
+
+	bitimg = {
+		[3] = love.graphics.newImage("assets/3.png"),
+		[5] = love.graphics.newImage("assets/5.png"),
+		[7] = love.graphics.newImage("assets/7.png"),
+		[10] = love.graphics.newImage("assets/10.png"),
+		[11] = love.graphics.newImage("assets/11.png"),
+		[12] = love.graphics.newImage("assets/12.png"),
+		[13] = love.graphics.newImage("assets/13.png"),
+		[14] = love.graphics.newImage("assets/14.png"),
+		[15] = love.graphics.newImage("assets/15.png"),
+	}
 
 end
 time = 0

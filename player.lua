@@ -43,10 +43,13 @@ player = {
 	end,
 
 	draw = function()
-		love.graphics.setColor(colors[player.color].r-20, colors[player.color].g-20, colors[player.color].b-20)
-		love.graphics.rectangle("fill", player.x, player.y, player.width, player.height)
-		love.graphics.setColor(200, 200, 200)
-		love.graphics.rectangle("fill", player.x + 5, player.y + 5, player.width-10, player.height-10)
+		love.graphics.setColor(colors[player.color].r+30, colors[player.color].g+30, colors[player.color].b+30)
+		--love.graphics.rectangle("fill", player.x, player.y, player.width, player.height)
+		--love.graphics.setColor(200, 200, 200)
+		if bitimg[bitmask] then
+				love.graphics.draw(bitimg[bitmask], player.x, player.y)
+		end
+		--love.graphics.rectangle("fill", player.x + 5, player.y + 5, player.width-10, player.height-10)
 	end,
 
 	drawSpawn = function()
@@ -74,9 +77,22 @@ player = {
 				table.insert(colliders, {i, dir})
 			end
 		end
+		bitmask = 15
 		for _, col in pairs(colliders) do
 			i = col[1]
 			dir = col[2]
+			if dir == 1 then
+				bitmask = bitmask - 4
+			end
+			if dir == 2 then
+				bitmask = bitmask - 2
+			end
+			if dir == 3 then
+				bitmask = bitmask - 8
+			end
+			if dir == 4 then
+				--bitmask = bitmask - 1
+			end
 			if dir == 3 or dir == 4 then
 				if tile[i].x + grid.buffer < player.x + player.width and tile[i].x + tile[i].width - grid.buffer > player.x then
 					if dir == 3 then
